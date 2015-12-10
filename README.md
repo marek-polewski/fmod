@@ -1,4 +1,4 @@
-Bindings for [FMOD](www.fmod.org) version 4.40.04
+Bindings for [FMOD](www.fmod.org) version 4.44.59 (Linux only)
 
 These bindings are very incomplete, there is only enough right now for the most basic sound playing requirements.
 

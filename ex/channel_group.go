@@ -4,22 +4,22 @@ package fmod_ex
 import "C"
 
 import (
-  "github.com/MobRulesGames/fmod/base"
+	"github.com/marek-polewski/fmod/base"
 )
 
 type ChannelGroup struct {
-  group *C.FMOD_CHANNELGROUP
+	group *C.FMOD_CHANNELGROUP
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_Release          (FMOD_CHANNELGROUP *channelgroup);
 // TODO: Bind this to a finalizer
 func (cg *ChannelGroup) Release() error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_Release(cg.group)
-  })
-  cg.group = nil
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_Release(cg.group)
+	})
+	cg.group = nil
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetSystemObject  (FMOD_CHANNELGROUP *channelgroup, FMOD_SYSTEM **system);
@@ -30,22 +30,22 @@ func (cg *ChannelGroup) Release() error {
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_SetVolume        (FMOD_CHANNELGROUP *channelgroup, float volume);
 func (cg *ChannelGroup) SetVolume(volume float64) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_SetVolume(cg.group, C.float(volume))
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_SetVolume(cg.group, C.float(volume))
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetVolume        (FMOD_CHANNELGROUP *channelgroup, float *volume);
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_SetPitch         (FMOD_CHANNELGROUP *channelgroup, float pitch);
 func (cg *ChannelGroup) SetPitch(pitch float64) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_SetPitch(cg.group, C.float(pitch))
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_SetPitch(cg.group, C.float(pitch))
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetPitch         (FMOD_CHANNELGROUP *channelgroup, float *pitch);
@@ -56,11 +56,11 @@ func (cg *ChannelGroup) SetPitch(pitch float64) error {
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_SetMute          (FMOD_CHANNELGROUP *channelgroup, FMOD_BOOL mute);
 func (cg *ChannelGroup) SetMute(mute bool) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_SetMute(cg.group, makeFmodBool(mute))
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_SetMute(cg.group, makeFmodBool(mute))
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetMute          (FMOD_CHANNELGROUP *channelgroup, FMOD_BOOL *mute);
@@ -83,11 +83,11 @@ func (cg *ChannelGroup) SetMute(mute bool) error {
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_AddGroup         (FMOD_CHANNELGROUP *channelgroup, FMOD_CHANNELGROUP *group);
 func (cg *ChannelGroup) AddGroup(group *ChannelGroup) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_AddGroup(cg.group, group.group)
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_AddGroup(cg.group, group.group)
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetNumGroups     (FMOD_CHANNELGROUP *channelgroup, int *numgroups);
@@ -100,30 +100,30 @@ func (cg *ChannelGroup) AddGroup(group *ChannelGroup) error {
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_GetDSPHead       (FMOD_CHANNELGROUP *channelgroup, FMOD_DSP **dsp);
 func (cg *ChannelGroup) GetDSPHead() (*Dsp, error) {
-  var ferr C.FMOD_RESULT
-  var dsp Dsp
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_GetDSPHead(cg.group, &dsp.dsp)
-  })
-  err := base.ResultToError(ferr)
-  if err != nil {
-    return nil, err
-  }
-  return &dsp, nil
+	var ferr C.FMOD_RESULT
+	var dsp Dsp
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_GetDSPHead(cg.group, &dsp.dsp)
+	})
+	err := base.ResultToError(ferr)
+	if err != nil {
+		return nil, err
+	}
+	return &dsp, nil
 }
 
 // FMOD_RESULT F_API FMOD_ChannelGroup_AddDSP           (FMOD_CHANNELGROUP *channelgroup, FMOD_DSP *dsp, FMOD_DSPCONNECTION **connection);
 func (cg *ChannelGroup) AddDSP(dsp *Dsp) (*DspConn, error) {
-  var ferr C.FMOD_RESULT
-  var conn DspConn
-  base.Thread(func() {
-    ferr = C.FMOD_ChannelGroup_AddDSP(cg.group, dsp.dsp, &conn.conn)
-  })
-  err := base.ResultToError(ferr)
-  if err != nil {
-    return nil, err
-  }
-  return &conn, nil
+	var ferr C.FMOD_RESULT
+	var conn DspConn
+	base.Thread(func() {
+		ferr = C.FMOD_ChannelGroup_AddDSP(cg.group, dsp.dsp, &conn.conn)
+	})
+	err := base.ResultToError(ferr)
+	if err != nil {
+		return nil, err
+	}
+	return &conn, nil
 }
 
 // /*

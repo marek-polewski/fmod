@@ -4,11 +4,11 @@ package fmod_ex
 import "C"
 
 import (
-  "github.com/MobRulesGames/fmod/base"
+	"github.com/marek-polewski/fmod/base"
 )
 
 type Channel struct {
-  channel *C.FMOD_CHANNEL
+	channel *C.FMOD_CHANNEL
 }
 
 //     'Channel' API
@@ -16,20 +16,20 @@ type Channel struct {
 
 // FMOD_RESULT F_API FMOD_Channel_Stop                  (FMOD_CHANNEL *channel);
 func (c *Channel) Stop() error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_Channel_Stop(c.channel)
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_Channel_Stop(c.channel)
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_Channel_SetPaused             (FMOD_CHANNEL *channel, FMOD_BOOL paused);
 func (c *Channel) SetPaused(paused bool) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_Channel_SetPaused(c.channel, makeFmodBool(paused))
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_Channel_SetPaused(c.channel, makeFmodBool(paused))
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_Channel_GetPaused             (FMOD_CHANNEL *channel, FMOD_BOOL *paused);
@@ -60,11 +60,11 @@ func (c *Channel) SetPaused(paused bool) error {
 
 // FMOD_RESULT F_API FMOD_Channel_SetChannelGroup       (FMOD_CHANNEL *channel, FMOD_CHANNELGROUP *channelgroup);
 func (c *Channel) SetChannelGroup(group *ChannelGroup) error {
-  var ferr C.FMOD_RESULT
-  base.Thread(func() {
-    ferr = C.FMOD_Channel_SetChannelGroup(c.channel, group.group)
-  })
-  return base.ResultToError(ferr)
+	var ferr C.FMOD_RESULT
+	base.Thread(func() {
+		ferr = C.FMOD_Channel_SetChannelGroup(c.channel, group.group)
+	})
+	return base.ResultToError(ferr)
 }
 
 // FMOD_RESULT F_API FMOD_Channel_GetChannelGroup       (FMOD_CHANNEL *channel, FMOD_CHANNELGROUP **channelgroup);
@@ -126,7 +126,7 @@ func (c *Channel) SetChannelGroup(group *ChannelGroup) error {
 // FMOD_RESULT F_API FMOD_Channel_GetLoopPoints         (FMOD_CHANNEL *channel, unsigned int *loopstart, FMOD_TIMEUNIT loopstarttype, unsigned int *loopend, FMOD_TIMEUNIT loopendtype);
 
 // /*
-//      Userdata set/get.                                                
+//      Userdata set/get.
 // */
 
 // FMOD_RESULT F_API FMOD_Channel_SetUserData           (FMOD_CHANNEL *channel, void *userdata);
